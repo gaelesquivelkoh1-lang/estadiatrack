@@ -31,14 +31,30 @@
             </div>
 
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Carrera:</label>
-                <select name="carrera" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none cursor-pointer" required>
-                    <option value="Licenciatura en Administración" {{ $alumno->carrera == 'Licenciatura en Administración' ? 'selected' : '' }}>Licenciatura en Administración</option>
-                    <option value="Ingeniería en Mantenimiento Industrial" {{ $alumno->carrera == 'Ingeniería en Mantenimiento Industrial' ? 'selected' : '' }}>Ingeniería en Mantenimiento Industrial</option>
-                    <option value="Licenciatura en Gastronomía" {{ $alumno->carrera == 'Licenciatura en Gastronomía' ? 'selected' : '' }}>Licenciatura en Gastronomía</option>
-                    <option value="Ingeniería en Tecnologías de la Información e Innovación Digital" {{ $alumno->carrera == 'Ingeniería en Tecnologías de la Información e Innovación Digital' ? 'selected' : '' }}>Ingeniería en Tecnologías de la Información e Innovación Digital</option>
-                </select>
-            </div>
+    <label class="block text-sm font-semibold text-gray-700 mb-1">Carrera:</label>
+    <select name="carrera" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none cursor-pointer focus:ring-2 focus:ring-yellow-100" required>
+        <optgroup label="Ingenierías">
+            <option value="Ingeniería en Mantenimiento Industrial" {{ $alumno->carrera == 'Ingeniería en Mantenimiento Industrial' ? 'selected' : '' }}>
+                Ingeniería en Mantenimiento Industrial
+            </option>
+            <option value="Ingeniería en Tecnologías de la Información e Innovación Digital" {{ $alumno->carrera == 'Ingeniería en Tecnologías de la Información e Innovación Digital' ? 'selected' : '' }}>
+                Ingeniería en Tecnologías de la Información e Innovación Digital
+            </option>
+        </optgroup>
+
+        <optgroup label="Licenciaturas">
+            <option value="Licenciatura en Administración" {{ $alumno->carrera == 'Licenciatura en Administración' ? 'selected' : '' }}>
+                Licenciatura en Administración
+            </option>
+            <option value="Licenciatura en Gastronomía" {{ $alumno->carrera == 'Licenciatura en Gastronomía' ? 'selected' : '' }}>
+                Licenciatura en Gastronomía
+            </option>
+            <option value="Licenciatura en Gestión y Desarrollo Turístico" {{ $alumno->carrera == 'Licenciatura en Gestión y Desarrollo Turístico' ? 'selected' : '' }}>
+                Licenciatura en Gestión y Desarrollo Turístico
+            </option>
+        </optgroup>
+    </select>
+</div>
 
             <div class="pt-4 flex gap-3">
                 <a href="{{ route('alumnos.index') }}" class="w-1/3 text-center bg-gray-100 text-gray-600 font-bold py-3 rounded-lg hover:bg-gray-200 transition">

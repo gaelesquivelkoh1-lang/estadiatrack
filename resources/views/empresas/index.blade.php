@@ -4,42 +4,43 @@
 
 <div class="max-w-7xl mx-auto px-6 py-8">
 
-    <!-- HEADER -->
-    <div class="flex justify-between items-center mb-8">
-
-        <!-- Texto -->
-        <div>
-            <h1 class="text-4xl font-bold text-gray-800">Empresas</h1>
-            <p class="text-gray-500 mt-1">Gestión de empresas registradas</p>
+    <div class="flex justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div class="flex items-center gap-6">
+            <img src="{{ asset('images/utc-logo.png') }}" alt="Logo UTC" class="h-16 w-auto object-contain">
+            
+            <div>
+                <h1 class="text-4xl font-bold text-gray-800 tracking-tight">Empresas</h1>
+                <p class="text-gray-500 mt-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    Gestión de convenios y empresas registradas
+                </p>
+            </div>
         </div>
 
-        <!-- Botón -->
         <a href="{{ route('empresas.create') }}" 
-           class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition inline-flex items-center gap-2">
-            
-            <span>➕</span>
+           class="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition-all inline-flex items-center gap-2 font-semibold">
+            <span class="text-xl">🏢</span>
             <span>Agrega tu empresa</span>
-
         </a>
-
     </div>
 
-    <!-- TARJETA -->
     <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
 
-        <!-- ENCABEZADO -->
-        <div class="px-6 py-4 border-b bg-gray-50 flex justify-between items-center">
-            <h2 class="font-semibold text-gray-700">Listado</h2>
+        <div class="px-6 py-5 border-b bg-gray-50/50 flex justify-between items-center">
+            <h2 class="font-bold text-gray-700 flex items-center gap-2">
+                <span class="text-blue-500">📋</span> Listado de Registros
+            </h2>
 
-            <input type="text" placeholder="Buscar..." 
-                class="border rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div class="relative">
+                <input type="text" placeholder="Buscar empresa..." 
+                    class="border-2 border-gray-200 rounded-xl px-4 py-2 pl-10 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-50 transition-all w-64">
+                <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+            </div>
         </div>
 
-        <!-- TABLA -->
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
-
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs font-bold tracking-wider">
                     <tr>
                         <th class="p-4 text-left">ID</th>
                         <th class="p-4 text-left">Nombre</th>
@@ -50,40 +51,59 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="divide-y divide-gray-100">
                     @forelse($empresas as $empresa)
-                    <tr class="border-b hover:bg-gray-50 transition">
-                        <td class="p-4 text-gray-500">{{ $empresa->id }}</td>
-                        <td class="p-4 font-medium text-gray-800">{{ $empresa->nombre }}</td>
-                        <td class="p-4">{{ $empresa->direccion }}</td>
-                        <td class="p-4 text-blue-600">{{ $empresa->email }}</td>
-                        <td class="p-4">{{ $empresa->telefono }}</td>
+                    <tr class="hover:bg-blue-50/30 transition-colors">
+                        <td class="p-4 text-gray-400 font-mono text-xs">#{{ $empresa->id }}</td>
+                        <td class="p-4 font-bold text-gray-800">{{ $empresa->nombre }}</td>
+                        <td class="p-4 text-gray-600">{{ $empresa->direccion }}</td>
+                        <td class="p-4">
+                            <span class="text-blue-600 bg-blue-50 px-2 py-1 rounded-md">{{ $empresa->email }}</span>
+                        </td>
+                        <td class="p-4 font-medium text-gray-700">{{ $empresa->telefono }}</td>
 
-                        <td class="p-4 text-center space-x-2">
-                            <button class="bg-yellow-400 text-white px-3 py-1 rounded-md hover:bg-yellow-500 transition text-sm">
-                                Editar
-                            </button>
+                        <td class="p-4">
+                            <div class="flex justify-center items-center gap-3">
+                                <a href="{{ route('empresas.edit', $empresa->id) }}" 
+                                   class="text-yellow-600 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-lg transition-colors shadow-sm border border-yellow-100"
+                                   title="Editar Empresa">
+                                   ✏️ <span class="font-bold ml-1">Editar</span>
+                                </a>
 
-                            <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm">
-                                Eliminar
-                            </button>
+                                <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" 
+                                      onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $empresa->nombre }}?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors shadow-sm border border-red-100 font-bold"
+                                            title="Eliminar Empresa">
+                                        🗑️ Eliminar
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
 
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-10 text-gray-400">
-                            No hay empresas registradas
+                        <td colspan="6" class="text-center py-20">
+                            <div class="flex flex-col items-center">
+                                <span class="text-6xl mb-4 grayscale">🏢</span>
+                                <p class="text-gray-400 text-lg font-medium">No se encontraron empresas registradas.</p>
+                                <p class="text-gray-300 text-sm">Comienza agregando una nueva empresa al sistema.</p>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
                 </tbody>
-
             </table>
         </div>
 
-    </div>
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 text-xs text-gray-400 italic">
+            Mostrando el listado oficial de la base de datos de vinculación.
+        </div>
 
+    </div>
 </div>
 
 @endsection
