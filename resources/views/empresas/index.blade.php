@@ -32,7 +32,7 @@
             </h2>
 
             <div class="relative">
-                <input type="text" placeholder="Buscar empresa..." 
+                <input type="text" id="searchInput" placeholder="Buscar empresa..." 
                     class="border-2 border-gray-200 rounded-xl px-4 py-2 pl-10 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-50 transition-all w-64">
                 <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
             </div>
@@ -51,7 +51,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-gray-100">
+                <tbody id="empresasTable" class="divide-y divide-gray-100">
                     @forelse($empresas as $empresa)
                     <tr class="hover:bg-blue-50/30 transition-colors">
                         <td class="p-4 text-gray-400 font-mono text-xs">#{{ $empresa->id }}</td>
@@ -85,7 +85,7 @@
                     </tr>
 
                     @empty
-                    <tr>
+                    <tr id="noDataRow">
                         <td colspan="6" class="text-center py-20">
                             <div class="flex flex-col items-center">
                                 <span class="text-6xl mb-4 grayscale">🏢</span>
@@ -102,8 +102,23 @@
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 text-xs text-gray-400 italic">
             Mostrando el listado oficial de la base de datos de vinculación.
         </div>
-
     </div>
 </div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let texto = this.value.toLowerCase();
+        let filas = document.querySelectorAll('#empresasTable tr:not(#noDataRow)');
+
+        filas.forEach(fila => {
+            let contenidoFila = fila.textContent.toLowerCase();
+            if (contenidoFila.indexOf(texto) > -1) {
+                fila.style.display = ""; 
+            } else {
+                fila.style.display = "none"; 
+            }
+        });
+    });
+</script>
 
 @endsection
