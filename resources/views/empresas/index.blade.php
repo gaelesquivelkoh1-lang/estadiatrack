@@ -70,16 +70,43 @@
                                    ✏️ <span class="font-bold ml-1">Editar</span>
                                 </a>
 
-                                <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" 
-                                      onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $empresa->nombre }}?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors shadow-sm border border-red-100 font-bold"
-                                            title="Eliminar Empresa">
-                                        🗑️ Eliminar
-                                    </button>
-                                </form>
+                                {{-- MODIFICADO: Se quitó el onsubmit y se agregó class="form-eliminar" y data-nombre --}}
+                                {{-- Dentro del @forelse en la tabla --}}
+<form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" class="form-eliminar" data-nombre="{{ $empresa->nombre }}">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors shadow-sm border border-red-100 font-bold">
+        🗑️ Eliminar
+    </button>
+</form>
+
+{{-- Script al final del archivo index --}}
+@push('scripts')
+<script>
+    document.querySelectorAll('.form-eliminar').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = this.getAttribute('data-nombre');
+            
+            Swal.fire({
+                title: '¿Eliminar empresa?',
+                text: `Estás a punto de borrar a "${nombre}". Esta acción no se puede deshacer.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    });
+</script>
+@endpush
                             </div>
                         </td>
                     </tr>
@@ -105,7 +132,10 @@
     </div>
 </div>
 
+{{-- AGREGADO: Scripts para SweetAlert2 y búsqueda --}}
+@push('scripts')
 <script>
+    // Buscador en tiempo real
     document.getElementById('searchInput').addEventListener('keyup', function() {
         let texto = this.value.toLowerCase();
         let filas = document.querySelectorAll('#empresasTable tr:not(#noDataRow)');
@@ -119,6 +149,45 @@
             }
         });
     });
+
+    // Notificación Toast de éxito para Guardar/Actualizar/Eliminar
+    @if(session('success'))
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    @endif
+
+    // Confirmación con SweetAlert2 para eliminar
+    document.querySelectorAll('.form-eliminar').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Extraemos el nombre de la empresa desde el atributo data-nombre
+            const nombreEmpresa = this.getAttribute('data-nombre');
+            
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `Estás a punto de eliminar la empresa "${nombreEmpresa}". Esta acción no se puede deshacer.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    });
 </script>
+@endpush
 
 @endsection

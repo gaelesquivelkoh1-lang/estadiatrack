@@ -11,11 +11,13 @@ class AlumnoController extends Controller
     // 1. Mostrar todos los alumnos
     public function index()
     {
+        // Usamos paginate para que la tabla no sea infinita
+        // Cargamos 'empresa' para evitar el problema de N+1 consultas
         $alumnos = Alumno::with('empresa')->paginate(10); 
         return view('alumnos.index', compact('alumnos'));
     }
 
-    // 2. Mostrar formulario para crear
+    // 2. Mostrar formulario para crear (Si usas el modal en el index, este puede ser opcional)
     public function create()
     {
         $empresas = Empresa::all();
@@ -31,19 +33,18 @@ class AlumnoController extends Controller
             'carrera'   => 'required|string|max:255',
             'email'     => 'required|email|unique:alumnos,email',
             'telefono'  => 'required|string|max:20',
+            'empresa_id' => 'nullable|exists:empresas,id', // Validamos que la empresa exista
         ]);
 
         Alumno::create($data);
         return redirect()->route('alumnos.index')->with('success', 'Alumno registrado correctamente.');
     }
 
-    // --- NUEVOS MÉTODOS PARA CORREGIR TU ERROR ---
-
-    // 4. Mostrar el formulario de edición (Línea 93 de tu error)
+    // 4. Mostrar el formulario de edición
     public function edit(Alumno $alumno)
     {
-        // Pasamos el alumno actual para llenar los campos del formulario
-        return view('alumnos.edit', compact('alumno'));
+        $empresas = Empresa::all(); // Por si necesitas cambiar la empresa asignada
+        return view('alumnos.edit', compact('alumno', 'empresas'));
     }
 
     // 5. Procesar la actualización en la base de datos
@@ -51,18 +52,21 @@ class AlumnoController extends Controller
     {
         $data = $request->validate([
             'nombre'    => 'required|string|max:255',
-            // La validación ignore el ID actual para que permita guardar la misma matrícula
+            // Importante: ignoramos el ID actual del alumno para las reglas 'unique'
             'matricula' => 'required|string|max:50|unique:alumnos,matricula,' . $alumno->id,
             'carrera'   => 'required|string|max:255',
             'email'     => 'required|email|unique:alumnos,email,' . $alumno->id,
             'telefono'  => 'required|string|max:20',
+            'empresa_id' => 'nullable|exists:empresas,id',
         ]);
 
         $alumno->update($data);
-        return redirect()->route('alumnos.index')->with('success', 'Perfil actualizado con éxito.');
+        
+        // Redirigimos al index para cumplir con tu requerimiento de UX
+      return redirect()->route('alumnos.index')->with('success', '¡Alumno actualizado con éxito!');
     }
 
-    // 6. Eliminar un alumno (Botón del botecito de basura)
+    // 6. Eliminar un alumno
     public function destroy(Alumno $alumno)
     {
         $alumno->delete();
@@ -80,13 +84,10 @@ class AlumnoController extends Controller
             'Licenciatura en Gestión y Desarrollo Turístico'
         ];
 
-        $alumnos = collect(); 
-
-        if ($carrera) {
-            $alumnos = Alumno::where('carrera', $carrera)
-                        ->with('empresa')
-                        ->get();
-        }
+        // Si hay carrera, filtramos; si no, enviamos colección vacía
+        $alumnos = $carrera 
+            ? Alumno::where('carrera', $carrera)->with('empresa')->get() 
+            : collect();
 
         return view('alumnos.carreras', compact('carrerasDisponibles', 'alumnos', 'carrera'));
     }
