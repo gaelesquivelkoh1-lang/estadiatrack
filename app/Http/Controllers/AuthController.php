@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Alumno; // Importante para buscar en la tabla de alumnos
+use App\Models\Alumno;
 
 class AuthController extends Controller
 {
-    // Muestra la pantalla de login (el diseño verde que quieres)
+    // Muestra la pantalla de login
     public function showLogin() {
         return view('auth.login');
     }
@@ -18,22 +18,24 @@ class AuthController extends Controller
             'matricula' => 'required'
         ]);
 
-        // Buscamos al alumno por su matrícula
         $alumno = Alumno::where('matricula', $request->matricula)->first();
 
         if ($alumno) {
-            // Si existe, creamos una sesión manual
-            session(['admin_sesion' => true, 'alumno_nombre' => $alumno->nombre]);
+            session([
+                'admin_sesion'     => true,
+                'alumno_nombre'    => $alumno->nombre,
+                'alumno_matricula' => $alumno->matricula, // ← nuevo
+            ]);
+            session()->save();
             return redirect()->route('empresas.index');
         }
 
-        // Si no existe, regresamos con error
         return back()->with('error', 'La matrícula ingresada no es válida o no está registrada.');
     }
 
     // Cierra la sesión
     public function logout() {
-        session()->forget(['admin_sesion', 'alumno_nombre']);
+        session()->forget(['admin_sesion', 'alumno_nombre', 'alumno_matricula']);
         return redirect()->route('login');
     }
 }

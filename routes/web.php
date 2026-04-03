@@ -4,14 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\EstanciaController;
-use App\Http\Controllers\AuthController; // <--- 1. IMPORTANTE AÑADIR ESTO
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PerfilController;
 
 // --- RUTAS DE ACCESO (LOGIN) ---
-// Ahora la raíz '/' muestra el login verde
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// --- RUTA DE PERFIL (sin middleware auth, usa sesión manual) ---
+Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
 
 // --- RUTAS DE EMPRESAS ---
 Route::prefix('empresas')->group(function () {
