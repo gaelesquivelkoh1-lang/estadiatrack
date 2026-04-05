@@ -6,6 +6,7 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\EstanciaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\ConvenioController;
 
 // --- RUTAS DE ACCESO (LOGIN) ---
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -41,3 +42,8 @@ Route::post('/estancias', [EstanciaController::class, 'store'])->name('estancias
 
 // --- RUTA DE CARRERAS ---
 Route::get('/carreras/{carrera?}', [AlumnoController::class, 'porCarrera'])->name('carreras.index');
+
+//  RUTAS DE LLENADO DE DOC
+Route::get('/convenios/crear',   [ConvenioController::class, 'create'])->name('convenios.create');
+Route::post('/convenios',        [ConvenioController::class, 'store'])->name('convenios.store');
+Route::get('/convenios/preview', [ConvenioController::class, 'preview'])->name('convenios.preview');

@@ -17,7 +17,7 @@
                 <a href="{{ route('empresas.index') }}" class="hover:text-blue-400">Empresas</a>
                 <a href="{{ route('alumnos.index') }}" class="hover:text-blue-400">Alumnos</a>
                 <a href="{{ route('estancias.index') }}" class="hover:text-blue-400">Estancias</a>
-
+                 <a href="{{ route('convenios.create') }}" class="hover:text-blue-400">Documentos</a>
                 {{-- ── Dropdown de perfil ── --}}
                 {{-- DEBUG TEMPORAL --}}
 <span style="color:red">{{ session('admin_sesion') ? 'SESION OK' : 'SIN SESION' }}</span>
