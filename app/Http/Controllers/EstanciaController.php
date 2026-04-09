@@ -2,48 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Estancia;
 use App\Models\Alumno;
 use App\Models\Empresa;
-use Illuminate\Http\Request;
+use App\Exports\EstanciasExport;
 
 class EstanciaController extends Controller
 {
-    // Mostrar la página principal de estancias (Lista + Formulario)
     public function index()
     {
-        // 1. Necesitamos los alumnos y empresas para el formulario de arriba
-        $alumnos = Alumno::all();
-        $empresas = Empresa::all();
+        $estancias = Estancia::with(['alumno', 'empresa'])->get();
+        $alumnos   = Alumno::orderBy('nombre')->get();
+        $empresas  = Empresa::orderBy('nombre')->get();
+        $grupos    = Alumno::whereNotNull('grupo')->where('grupo', '!=', '')->distinct()->orderBy('grupo')->pluck('grupo');
 
-        // 2. Necesitamos las estancias con sus relaciones para el apartado de abajo
-        $estancias = Estancia::with('alumno', 'empresa')->get();
-
-        // 3. ENVIAMOS LAS TRES VARIABLES A LA VISTA
-        return view('estancias.index', compact('estancias', 'alumnos', 'empresas'));
-    }
-
-    // Si decides usar una página aparte para el formulario
-    public function create()
-    {
-        $alumnos = Alumno::all();
-        $empresas = Empresa::all();
-        return view('estancias.create', compact('alumnos', 'empresas'));
+        return view('estancias.index', compact('estancias', 'alumnos', 'empresas', 'grupos'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'alumno_id' => 'required|exists:alumnos,id',
-            'empresa_id' => 'required|exists:empresas,id',
+            'alumno_id'    => 'required|exists:alumnos,id',
+            'empresa_id'   => 'required|exists:empresas,id',
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-            'estatus' => 'required|string|max:50',
+            'fecha_fin'    => 'required|date|after:fecha_inicio',
+            'estatus'      => 'required|in:En Proceso,Finalizada',
         ]);
 
-        Estancia::create($request->all());
+        Estancia::create($request->only(['alumno_id', 'empresa_id', 'fecha_inicio', 'fecha_fin', 'estatus']));
 
-        return redirect()->route('estancias.index')
-            ->with('success', 'Estancia registrada correctamente');
+        return back()->with('success', 'Estancia registrada correctamente.');
+    }
+
+    public function export(Request $request)
+    {
+        $query = Estancia::with(['alumno', 'empresa']);
+
+        if ($request->filled('carrera')) {
+            $query->whereHas('alumno', fn($q) => $q->where('carrera', $request->carrera));
+        }
+        if ($request->filled('inicial')) {
+            $query->whereHas('alumno', fn($q) => $q->where('nombre', 'like', $request->inicial . '%'));
+        }
+        if ($request->filled('fecha_inicio')) {
+            $query->where('fecha_inicio', '>=', $request->fecha_inicio);
+        }
+        if ($request->filled('fecha_fin')) {
+            $query->where('fecha_fin', '<=', $request->fecha_fin);
+        }
+        if ($request->filled('grupo')) {
+            $query->whereHas('alumno', fn($q) => $q->where('grupo', $request->grupo));
+        }
+
+        $estancias = $query->get();
+        $titulo    = $request->carrera ?? 'Todas las carreras';
+
+        return (new EstanciasExport($estancias, $titulo))->download();
     }
 }

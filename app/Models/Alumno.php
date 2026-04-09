@@ -13,6 +13,7 @@ class Alumno extends Model
         'nombre',
         'matricula',
         'carrera',
+        'grupo', 
         'email',
         'telefono',
         'empresa_id', 
@@ -32,5 +33,9 @@ class Alumno extends Model
     public function estancias()
     {
         return $this->hasMany(Estancia::class);
+    }
+    public function actividades()
+    {
+    return $this->hasMany(Estancia::class);
     }
 }
