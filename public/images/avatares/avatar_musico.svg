@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Fondo -->
+  <circle cx="50" cy="50" r="48" fill="#FFF1F2" stroke="#FB7185" stroke-width="1.5"/>
+  <!-- Notas musicales decorativas -->
+  <text x="15" y="25" font-size="12" fill="#FDA4AF" opacity="0.7" font-family="serif">♪</text>
+  <text x="78" y="20" font-size="10" fill="#FDA4AF" opacity="0.7" font-family="serif">♫</text>
+  <text x="12" y="70" font-size="9" fill="#FDA4AF" opacity="0.6" font-family="serif">♩</text>
+  <text x="80" y="75" font-size="11" fill="#FDA4AF" opacity="0.7" font-family="serif">♪</text>
+  <!-- Cuerpo con camiseta de banda -->
+  <ellipse cx="50" cy="78" rx="22" ry="15" fill="#1F2937"/>
+  <rect x="35" y="57" width="30" height="23" rx="3" fill="#1F2937"/>
+  <!-- Diseño camiseta -->
+  <ellipse cx="50" cy="67" rx="8" ry="6" fill="#374151"/>
+  <text x="46" y="70" font-size="7" fill="#FB7185" font-family="serif">♫</text>
+  <!-- Cabeza -->
+  <circle cx="50" cy="37" r="15" fill="#FDDBB4"/>
+  <!-- Cabello rockero largo -->
+  <path d="M35 30 Q34 18 50 16 Q66 18 65 30" fill="#1F2937"/>
+  <path d="M35 30 Q30 40 32 50 Q34 55 36 57" stroke="#1F2937" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M65 30 Q70 40 68 50 Q66 55 64 57" stroke="#1F2937" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Flequillo -->
+  <path d="M35 28 Q40 24 45 27" stroke="#1F2937" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Ojos con expresión cool -->
+  <circle cx="44" cy="37" r="3.5" fill="white"/>
+  <circle cx="56" cy="37" r="3.5" fill="white"/>
+  <circle cx="44" cy="37" r="2.2" fill="#1F2937"/>
+  <circle cx="56" cy="37" r="2.2" fill="#1F2937"/>
+  <circle cx="45" cy="36" r="0.9" fill="white"/>
+  <circle cx="57" cy="36" r="0.9" fill="white"/>
+  <!-- Cejas cool -->
+  <path d="M41 33 Q44 31 47 33" stroke="#1F2937" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M53 33 Q56 31 59 33" stroke="#1F2937" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sonrisa segura -->
+  <path d="M44 43 Q50 47 56 43" stroke="#C0847A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Mejillas -->
+  <ellipse cx="40" cy="41" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <ellipse cx="60" cy="41" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <!-- Auriculares -->
+  <path d="M33 34 Q28 37 30 43" stroke="#374151" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M67 34 Q72 37 70 43" stroke="#374151" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <rect x="27" y="41" width="5" height="7" rx="2.5" fill="#1F2937"/>
+  <rect x="68" y="41" width="5" height="7" rx="2.5" fill="#1F2937"/>
+  <path d="M32 25 Q50 18 68 25" stroke="#374151" stroke-width="2" fill="none"/>
+  <!-- Guitarra pequeña -->
+  <ellipse cx="72" cy="72" rx="6" ry="8" fill="#92400E"/>
+  <ellipse cx="72" cy="67" rx="4" ry="5" fill="#B45309"/>
+  <rect x="71" y="55" width="2" height="14" fill="#78350F"/>
+  <line x1="69" y1="65" x2="75" y2="65" stroke="#FCD34D" stroke-width="0.6"/>
+  <line x1="69" y1="67" x2="75" y2="67" stroke="#FCD34D" stroke-width="0.6"/>
+  <line x1="69" y1="69" x2="75" y2="69" stroke="#FCD34D" stroke-width="0.6"/>
+  <circle cx="72" cy="70" r="1" fill="#FCD34D"/>
+</svg>

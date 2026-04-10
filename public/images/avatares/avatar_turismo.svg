@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Fondo -->
+  <circle cx="50" cy="50" r="48" fill="#ECFDF5" stroke="#34D399" stroke-width="1.5"/>
+  <!-- Cuerpo camisa safari -->
+  <ellipse cx="50" cy="78" rx="22" ry="16" fill="#D97706"/>
+  <rect x="36" y="57" width="28" height="23" rx="3" fill="#D97706"/>
+  <!-- Bolsillos safari -->
+  <rect x="38" y="62" width="9" height="7" rx="1" fill="#B45309" stroke="#92400E" stroke-width="0.5"/>
+  <rect x="53" y="62" width="9" height="7" rx="1" fill="#B45309" stroke="#92400E" stroke-width="0.5"/>
+  <!-- Botones -->
+  <circle cx="50" cy="60" r="1" fill="#92400E"/>
+  <circle cx="50" cy="65" r="1" fill="#92400E"/>
+  <circle cx="50" cy="70" r="1" fill="#92400E"/>
+  <!-- Cabeza -->
+  <circle cx="50" cy="38" r="15" fill="#F5C5A3"/>
+  <!-- Sombrero explorador -->
+  <ellipse cx="50" cy="28" rx="20" ry="5" fill="#92400E"/>
+  <ellipse cx="50" cy="22" rx="13" ry="9" fill="#B45309"/>
+  <rect x="37" y="22" width="26" height="7" rx="1" fill="#92400E"/>
+  <!-- Banda del sombrero -->
+  <rect x="37" y="26" width="26" height="3" fill="#FCD34D"/>
+  <!-- Ojos aventureros -->
+  <circle cx="44" cy="37" r="3.5" fill="white"/>
+  <circle cx="56" cy="37" r="3.5" fill="white"/>
+  <circle cx="44" cy="37" r="2" fill="#064E3B"/>
+  <circle cx="56" cy="37" r="2" fill="#064E3B"/>
+  <circle cx="45" cy="36" r="0.8" fill="white"/>
+  <circle cx="57" cy="36" r="0.8" fill="white"/>
+  <!-- Cejas arqueadas -->
+  <path d="M41 33 Q44 31 47 33" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M53 33 Q56 31 59 33" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Sonrisa -->
+  <path d="M44 43 Q50 48 56 43" stroke="#C0847A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Mejillas bronceadas -->
+  <ellipse cx="40" cy="41" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <ellipse cx="60" cy="41" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <!-- Cámara fotográfica -->
+  <rect x="64" y="63" width="14" height="10" rx="2" fill="#374151"/>
+  <circle cx="71" cy="68" r="3.5" fill="#1F2937" stroke="#6B7280" stroke-width="1"/>
+  <circle cx="71" cy="68" r="2" fill="#111827"/>
+  <circle cx="71" cy="68" r="1" fill="#374151"/>
+  <rect x="67" y="61" width="5" height="3" rx="1" fill="#4B5563"/>
+  <circle cx="75" cy="64" r="1" fill="#EF4444"/>
+</svg>

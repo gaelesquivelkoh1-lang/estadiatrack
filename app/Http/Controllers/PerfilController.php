@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Alumno;
 use App\Models\Estancia;
 
@@ -18,7 +19,6 @@ class PerfilController extends Controller
                       ->orWhere('nombre', session('alumno_nombre'))
                       ->first();
 
-        // Estancias del alumno con empresa y bitácoras
         $historial = collect();
 
         if ($user) {
@@ -27,9 +27,7 @@ class PerfilController extends Controller
                                  ->latest()
                                  ->get();
 
-            // Convertimos todo a un historial unificado
             foreach ($estancias as $estancia) {
-                // Entrada por la estancia
                 $historial->push((object)[
                     'descripcion' => 'Estancia en ' . ($estancia->empresa->nombre ?? 'Empresa'),
                     'detalle'     => $estancia->fecha_inicio . ' → ' . $estancia->fecha_fin,
@@ -37,7 +35,6 @@ class PerfilController extends Controller
                     'fecha'       => $estancia->created_at,
                 ]);
 
-                // Entradas por cada bitácora
                 foreach ($estancia->bitacoras as $bitacora) {
                     $historial->push((object)[
                         'descripcion' => 'Bitácora registrada',
@@ -52,5 +49,30 @@ class PerfilController extends Controller
         }
 
         return view('perfil', compact('user', 'historial'));
+    }
+
+    public function actualizarAvatar(Request $request)
+    {
+        $avataresValidos = [
+            'avatar_admin.svg', 'avatar_industrial.svg', 'avatar_gastronomia.svg',
+            'avatar_tecnologias.svg', 'avatar_turismo.svg', 'avatar_astronauta.svg',
+            'avatar_artista.svg', 'avatar_cientifico.svg', 'avatar_musico.svg',
+        ];
+
+        $request->validate([
+            'avatar' => 'required|in:' . implode(',', $avataresValidos),
+        ]);
+
+        $alumno = Alumno::where('matricula', session('alumno_matricula'))
+                        ->orWhere('nombre', session('alumno_nombre'))
+                        ->first();
+
+        if (!$alumno) {
+            return redirect()->route('perfil')->with('error', 'No se encontró el alumno.');
+        }
+
+        $alumno->update(['avatar' => $request->avatar]);
+
+        return redirect()->route('perfil')->with('success', '¡Avatar actualizado correctamente!');
     }
 }

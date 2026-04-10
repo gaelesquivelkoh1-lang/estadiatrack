@@ -21,7 +21,9 @@ Route::middleware('rol:alumno')->group(function () {
     Route::get('/convenios/crear',   [ConvenioController::class, 'create'])->name('convenios.create');
     Route::post('/convenios',        [ConvenioController::class, 'store'])->name('convenios.store');
     Route::get('/convenios/preview', [ConvenioController::class, 'preview'])->name('convenios.preview');
+    Route::post('/perfil/avatar', [PerfilController::class, 'actualizarAvatar'])->name('perfil.avatar');
 });
+
 
 // ── VINCULACIÓN + SUPERUSUARIO ─────────────────────────────────
 Route::middleware('rol:vinculacion,superusuario')->group(function () {

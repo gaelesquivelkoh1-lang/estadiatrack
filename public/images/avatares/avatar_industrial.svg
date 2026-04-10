@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Fondo -->
+  <circle cx="50" cy="50" r="48" fill="#FEF3E8" stroke="#EF9F27" stroke-width="1.5"/>
+  <!-- Cuerpo con overol -->
+  <ellipse cx="50" cy="78" rx="22" ry="16" fill="#1D4ED8"/>
+  <rect x="36" y="58" width="28" height="22" rx="3" fill="#1D4ED8"/>
+  <!-- Bolsillos overol -->
+  <rect x="38" y="62" width="8" height="6" rx="1" fill="#1E40AF" stroke="#1D4ED8" stroke-width="0.5"/>
+  <rect x="54" y="62" width="8" height="6" rx="1" fill="#1E40AF" stroke="#1D4ED8" stroke-width="0.5"/>
+  <!-- Cabeza -->
+  <circle cx="50" cy="38" r="16" fill="#F5C5A3"/>
+  <!-- Casco amarillo -->
+  <ellipse cx="50" cy="27" rx="18" ry="10" fill="#FCD34D"/>
+  <rect x="32" y="29" width="36" height="5" rx="2" fill="#F59E0B"/>
+  <ellipse cx="50" cy="27" rx="10" ry="5" fill="#FDE68A"/>
+  <!-- Ojos -->
+  <circle cx="44" cy="38" r="3.5" fill="white"/>
+  <circle cx="56" cy="38" r="3.5" fill="white"/>
+  <circle cx="44" cy="38" r="2" fill="#374151"/>
+  <circle cx="56" cy="38" r="2" fill="#374151"/>
+  <circle cx="45" cy="37" r="0.8" fill="white"/>
+  <circle cx="57" cy="37" r="0.8" fill="white"/>
+  <!-- Cejas -->
+  <path d="M41 34 Q44 32 47 34" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M53 34 Q56 32 59 34" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Sonrisa con diente -->
+  <path d="M44 44 Q50 49 56 44" stroke="#C0847A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Mejillas -->
+  <ellipse cx="40" cy="42" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <ellipse cx="60" cy="42" rx="4" ry="2" fill="#F4A89A" opacity="0.5"/>
+  <!-- Llave inglesa -->
+  <rect x="64" y="60" width="4" height="18" rx="1" fill="#6B7280" transform="rotate(-30 66 69)"/>
+  <ellipse cx="72" cy="60" rx="5" ry="4" fill="none" stroke="#6B7280" stroke-width="2.5"/>
+  <ellipse cx="72" cy="60" rx="2.5" ry="2" fill="#6B7280"/>
+</svg>

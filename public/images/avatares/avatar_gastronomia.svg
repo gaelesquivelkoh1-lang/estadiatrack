@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Fondo -->
+  <circle cx="50" cy="50" r="48" fill="#FFF7ED" stroke="#F97316" stroke-width="1.5"/>
+  <!-- Cuerpo con delantal -->
+  <ellipse cx="50" cy="78" rx="22" ry="16" fill="#FFFFFF"/>
+  <rect x="36" y="57" width="28" height="23" rx="3" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="0.8"/>
+  <!-- Delantal -->
+  <rect x="42" y="57" width="16" height="23" rx="2" fill="#F3F4F6"/>
+  <rect x="44" y="60" width="12" height="3" rx="1" fill="#E5E7EB"/>
+  <!-- Cabeza -->
+  <circle cx="50" cy="38" r="15" fill="#FDDBB4"/>
+  <!-- Gorro de chef -->
+  <rect x="36" y="25" width="28" height="5" rx="2" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="0.5"/>
+  <ellipse cx="50" cy="18" rx="13" ry="11" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="0.8"/>
+  <ellipse cx="50" cy="14" rx="9" ry="7" fill="#FFFFFF"/>
+  <!-- Ojos expresivos -->
+  <circle cx="44" cy="37" r="3.5" fill="white"/>
+  <circle cx="56" cy="37" r="3.5" fill="white"/>
+  <circle cx="44" cy="37" r="2.2" fill="#4B3728"/>
+  <circle cx="56" cy="37" r="2.2" fill="#4B3728"/>
+  <circle cx="45" cy="36" r="0.9" fill="white"/>
+  <circle cx="57" cy="36" r="0.9" fill="white"/>
+  <!-- Cejas felices -->
+  <path d="M41 33 Q44 31 47 33" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M53 33 Q56 31 59 33" stroke="#4B3728" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Gran sonrisa -->
+  <path d="M43 43 Q50 49 57 43" stroke="#C0847A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Mejillas redondas -->
+  <ellipse cx="39" cy="41" rx="4.5" ry="2.5" fill="#F4A89A" opacity="0.7"/>
+  <ellipse cx="61" cy="41" rx="4.5" ry="2.5" fill="#F4A89A" opacity="0.7"/>
+  <!-- Cuchara y tenedor -->
+  <line x1="68" y1="60" x2="68" y2="78" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="68" cy="58" rx="3" ry="4" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+  <line x1="74" y1="58" x2="74" y2="78" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="72" y1="58" x2="72" y2="64" stroke="#9CA3AF" stroke-width="1.2"/>
+  <line x1="74" y1="58" x2="74" y2="64" stroke="#9CA3AF" stroke-width="1.2"/>
+  <line x1="76" y1="58" x2="76" y2="64" stroke="#9CA3AF" stroke-width="1.2"/>
+</svg>

@@ -9,15 +9,17 @@ class Alumno extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nombre',
-        'matricula',
-        'carrera',
-        'grupo', 
-        'email',
-        'telefono',
-        'empresa_id', 
-    ];
+   protected $fillable = [
+    'nombre',
+    'matricula',
+    'carrera',
+    'grupo',
+    'cuatrimestre',
+    'avatar',
+    'email',
+    'telefono',
+    'empresa_id',
+];
 
     /**
      * Relación con la Empresa (Directa)
