@@ -21,6 +21,7 @@ class Alumno extends Model
     'empresa_id',
 ];
 
+
     /**
      * Relación con la Empresa (Directa)
      */

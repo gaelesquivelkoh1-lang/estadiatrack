@@ -20,11 +20,13 @@ class CheckRol
         if (!in_array($rolSesion, $roles)) {
             return match($rolSesion) {
                 'alumno'       => redirect()->route('perfil')
-                                           ->with('error', 'No tienes permiso para acceder a esa sección.'),
+                                ->with('error', 'No tienes permiso para acceder a esa sección.'),
+                'empresa'      => redirect()->route('empresa.dashboard')
+                                ->with('error', 'No tienes permiso para acceder a esa sección.'),
                 'vinculacion'  => redirect()->route('vinculacion.dashboard')
-                                           ->with('error', 'No tienes permiso para acceder a esa sección.'),
+                                ->with('error', 'No tienes permiso para acceder a esa sección.'),
                 'superusuario' => redirect()->route('superadmin.dashboard')
-                                           ->with('error', 'No tienes permiso para acceder a esa sección.'),
+                                ->with('error', 'No tienes permiso para acceder a esa sección.'),
                 default        => redirect()->route('login'),
             };
         }

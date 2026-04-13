@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Models\Alumno;
 use App\Models\Estancia;
 
@@ -17,6 +16,7 @@ class PerfilController extends Controller
 
         $user = Alumno::where('matricula', session('alumno_matricula'))
                       ->orWhere('nombre', session('alumno_nombre'))
+                      ->with(['estancias.empresa']) // ← carga estancias con empresa para el botón de asistencias
                       ->first();
 
         $historial = collect();

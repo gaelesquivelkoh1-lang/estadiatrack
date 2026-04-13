@@ -16,6 +16,7 @@ class Admin extends Model
         'rol',
         'activo',
         'creado_por',
+        'empresa_id',
     ];
 
     protected $hidden = ['password'];
@@ -35,5 +36,15 @@ class Admin extends Model
     public function usuariosCreados()
     {
         return $this->hasMany(Admin::class, 'creado_por');
+    }
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function asistenciasRegistradas()
+    {
+        return $this->hasMany(Asistencia::class, 'registrado_por');
     }
 }

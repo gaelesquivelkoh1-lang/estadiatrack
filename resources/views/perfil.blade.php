@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        {{-- Modal selector de avatares (inline, sin position:fixed) --}}
+        {{-- Modal selector de avatares (inline) --}}
         <div id="modalAvatares" class="hidden bg-white rounded-[1.75rem] border-2 border-emerald-200 shadow-2xl p-8">
 
             <div class="flex items-center justify-between mb-2">
@@ -142,6 +142,41 @@
             </dl>
         </div>
 
+        {{-- Mis asistencias --}}
+        @if($user->estancias->count())
+        <div class="bg-white rounded-[1.75rem] border border-gray-100 shadow-sm p-8">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Mis asistencias
+            </h2>
+            <div class="space-y-3">
+                @foreach($user->estancias as $estancia)
+                <div class="flex items-center justify-between bg-gray-50 rounded-2xl px-5 py-4">
+                    <div>
+                        <p class="text-sm font-bold text-gray-800">{{ $estancia->empresa->nombre ?? 'Empresa' }}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            {{ \Carbon\Carbon::parse($estancia->fecha_inicio)->format('d/m/Y') }}
+                            → {{ \Carbon\Carbon::parse($estancia->fecha_fin)->format('d/m/Y') }}
+                        </p>
+                    </div>
+                    <a href="{{ route('alumno.calendario', $estancia->id) }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold
+                              text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Ver asistencias
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
         {{-- Historial --}}
         <div class="bg-white rounded-[1.75rem] border border-gray-100 shadow-sm p-8">
             <h2 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
@@ -211,7 +246,6 @@
 
 @push('scripts')
 <script>
-    // Abrir/cerrar modal inline
     document.getElementById('btnAbrirModal').addEventListener('click', function() {
         const modal = document.getElementById('modalAvatares');
         modal.classList.remove('hidden');
@@ -226,7 +260,6 @@
         document.getElementById('modalAvatares').classList.add('hidden');
     });
 
-    // Seleccionar avatar
     function seleccionarAvatar(archivo) {
         document.getElementById('avatarSeleccionado').value = archivo;
 
@@ -245,7 +278,6 @@
         document.getElementById('avatarPreview').src = '/images/avatares/' + archivo;
     }
 
-    // Debug submit
     document.getElementById('avatarForm').addEventListener('submit', function(e) {
         const val = document.getElementById('avatarSeleccionado').value;
         console.log('Enviando avatar:', val);

@@ -20,12 +20,16 @@
                     <a href="{{ route('perfil') }}" class="hover:text-blue-400 text-sm font-medium">Mi perfil</a>
                     <a href="{{ route('convenios.create') }}" class="hover:text-blue-400 text-sm font-medium">Documentos</a>
 
+                @elseif(session('rol') === 'empresa')
+                    <a href="{{ route('empresa.dashboard') }}" class="hover:text-blue-400 text-sm font-medium">Mis Alumnos</a>
+
                 @elseif(session('rol') === 'vinculacion')
                     <a href="{{ route('vinculacion.dashboard') }}" class="hover:text-blue-400 text-sm font-medium">Panel</a>
                     <a href="{{ route('empresas.index') }}" class="hover:text-blue-400 text-sm font-medium">Empresas</a>
                     <a href="{{ route('alumnos.index') }}" class="hover:text-blue-400 text-sm font-medium">Alumnos</a>
                     <a href="{{ route('estancias.index') }}" class="hover:text-blue-400 text-sm font-medium">Estancias</a>
                     <a href="{{ route('vinculacion.convenios') }}" class="hover:text-blue-400 text-sm font-medium">Convenios</a>
+                    <a href="{{ route('empresa.dashboard.admin') }}" class="hover:text-blue-400 text-sm font-medium">Asistencias</a>
 
                 @elseif(session('rol') === 'superusuario')
                     <a href="{{ route('superadmin.dashboard') }}" class="hover:text-blue-400 text-sm font-medium">Panel</a>
@@ -34,6 +38,7 @@
                     <a href="{{ route('estancias.index') }}" class="hover:text-blue-400 text-sm font-medium">Estancias</a>
                     <a href="{{ route('vinculacion.convenios') }}" class="hover:text-blue-400 text-sm font-medium">Convenios</a>
                     <a href="{{ route('superadmin.usuarios') }}" class="hover:text-blue-400 text-sm font-medium">Usuarios</a>
+                    <a href="{{ route('empresa.dashboard.admin') }}" class="hover:text-blue-400 text-sm font-medium">Asistencias</a>
                 @endif
 
                 {{-- Dropdown de perfil --}}
@@ -65,7 +70,10 @@
                         <div class="px-4 pb-3 pt-1 border-b border-gray-100">
                             <p class="text-xs font-bold text-gray-800 truncate">{{ session('alumno_nombre') }}</p>
                             <p class="text-[10px] text-gray-400 mt-0.5">
-                                {{ session('rol') === 'superusuario' ? 'Super Usuario' : ucfirst(session('rol')) }}
+                                @if(session('rol') === 'superusuario') Super Usuario
+                                @elseif(session('rol') === 'empresa') Empresa
+                                @else {{ ucfirst(session('rol')) }}
+                                @endif
                             </p>
                         </div>
 
@@ -78,6 +86,17 @@
                             </svg>
                             Mi perfil
                         </a>
+
+                        @elseif(session('rol') === 'empresa')
+                        <a href="{{ route('empresa.dashboard') }}"
+                           class="flex items-center gap-3 mx-2 mt-1 px-3 py-2.5 rounded-xl text-xs font-semibold
+                                  text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            Panel de empresa
+                        </a>
+
                         @elseif(session('rol') === 'superusuario')
                         <a href="{{ route('superadmin.dashboard') }}"
                            class="flex items-center gap-3 mx-2 mt-1 px-3 py-2.5 rounded-xl text-xs font-semibold
@@ -87,6 +106,7 @@
                             </svg>
                             Panel de administración
                         </a>
+
                         @elseif(session('rol') === 'vinculacion')
                         <a href="{{ route('vinculacion.dashboard') }}"
                            class="flex items-center gap-3 mx-2 mt-1 px-3 py-2.5 rounded-xl text-xs font-semibold

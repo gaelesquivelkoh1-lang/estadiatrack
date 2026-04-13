@@ -19,24 +19,29 @@ class AuthController extends Controller
 
         $credencial = trim($request->matricula);
 
-        // ── 1. ¿Es superusuario o vinculación? (tienen usuario + contraseña)
+        // ── 1. ¿Es superusuario, vinculación o empresa? (tienen usuario + contraseña)
         if ($request->filled('password')) {
             $admin = Admin::where('usuario', $credencial)
                           ->where('activo', true)
                           ->first();
 
+            // Integración del nuevo bloque de validación y sesión
             if ($admin && $admin->verificarPassword($request->password)) {
                 session([
-                    'admin_sesion' => true,
+                    'admin_sesion'  => true,
                     'alumno_nombre' => $admin->nombre,
-                    'admin_id'     => $admin->id,
-                    'rol'          => $admin->rol,
+                    'admin_id'      => $admin->id,
+                    'rol'           => $admin->rol,
+                    'empresa_id'    => $admin->empresa_id, // Nuevo dato en sesión
                 ]);
                 session()->save();
 
-                return $admin->rol === 'superusuario'
-                    ? redirect()->route('superadmin.dashboard')
-                    : redirect()->route('vinculacion.dashboard');
+                // Redirección dinámica según el rol
+                return match($admin->rol) {
+                    'superusuario' => redirect()->route('superadmin.dashboard'),
+                    'empresa'      => redirect()->route('empresa.dashboard'),
+                    default        => redirect()->route('vinculacion.dashboard'),
+                };
             }
 
             return back()->with('error', 'Credenciales incorrectas.');

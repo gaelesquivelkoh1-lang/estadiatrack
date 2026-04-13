@@ -9,6 +9,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ConvenioController;
 use App\Http\Controllers\VinculacionController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\EmpresaAdminController;
 
 // ── LOGIN ──────────────────────────────────────────────────────
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -17,17 +18,26 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ── ALUMNO ─────────────────────────────────────────────────────
 Route::middleware('rol:alumno')->group(function () {
-    Route::get('/perfil',            [PerfilController::class, 'index'])->name('perfil');
-    Route::get('/convenios/crear',   [ConvenioController::class, 'create'])->name('convenios.create');
-    Route::post('/convenios',        [ConvenioController::class, 'store'])->name('convenios.store');
-    Route::get('/convenios/preview', [ConvenioController::class, 'preview'])->name('convenios.preview');
-    Route::post('/perfil/avatar', [PerfilController::class, 'actualizarAvatar'])->name('perfil.avatar');
+    Route::get('/perfil',             [PerfilController::class, 'index'])->name('perfil');
+    Route::get('/convenios/crear',    [ConvenioController::class, 'create'])->name('convenios.create');
+    Route::post('/convenios',         [ConvenioController::class, 'store'])->name('convenios.store');
+    Route::get('/convenios/preview',  [ConvenioController::class, 'preview'])->name('convenios.preview');
+    Route::post('/perfil/avatar',     [PerfilController::class, 'actualizarAvatar'])->name('perfil.avatar');
+    Route::get('/mis-asistencias/{estancia}', [EmpresaAdminController::class, 'calendario'])->name('alumno.calendario');
 });
 
+// ── EMPRESA ────────────────────────────────────────────────────
+Route::middleware('rol:empresa')->group(function () {
+    Route::get('/empresa/dashboard',                        [EmpresaAdminController::class, 'dashboard'])->name('empresa.dashboard');
+    Route::get('/empresa/estancia/{estancia}/calendario',   [EmpresaAdminController::class, 'calendario'])->name('empresa.calendario');
+    Route::post('/empresa/estancia/{estancia}/asistencia',  [EmpresaAdminController::class, 'guardarAsistencia'])->name('empresa.asistencia');
+});
 
 // ── VINCULACIÓN + SUPERUSUARIO ─────────────────────────────────
 Route::middleware('rol:vinculacion,superusuario')->group(function () {
-Route::get('/estancias/export', [EstanciaController::class, 'export'])->name('estancias.export');
+
+    Route::get('/estancias/export', [EstanciaController::class, 'export'])->name('estancias.export');
+
     // Empresas
     Route::prefix('empresas')->group(function () {
         Route::get('/',               [EmpresaController::class, 'index'])->name('empresas.index');
@@ -60,6 +70,11 @@ Route::get('/estancias/export', [EstanciaController::class, 'export'])->name('es
     Route::get('/vinculacion/convenios',                    [VinculacionController::class, 'convenios'])->name('vinculacion.convenios');
     Route::post('/vinculacion/convenios/{convenio}/firmar', [VinculacionController::class, 'firmar'])->name('vinculacion.firmar');
     Route::post('/vinculacion/firma',                       [VinculacionController::class, 'guardarFirma'])->name('vinculacion.guardarFirma');
+
+    // Asistencias para vinculación/superadmin (rutas con prefijo admin)
+    Route::get('/admin/empresa/dashboard',                       [EmpresaAdminController::class, 'dashboard'])->name('empresa.dashboard.admin');
+    Route::get('/admin/empresa/estancia/{estancia}/calendario',  [EmpresaAdminController::class, 'calendario'])->name('empresa.calendario.admin');
+    Route::post('/admin/empresa/estancia/{estancia}/asistencia', [EmpresaAdminController::class, 'guardarAsistencia'])->name('empresa.asistencia.admin');
 });
 
 // ── SOLO SUPERUSUARIO ──────────────────────────────────────────

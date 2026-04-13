@@ -37,4 +37,8 @@ class Estancia extends Model
     {
         return $this->hasMany(Evaluacion::class);
     }
+    public function asistencias()
+    {
+    return $this->hasMany(Asistencia::class);
+    }
 }
